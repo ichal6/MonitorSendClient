@@ -12,20 +12,29 @@ export class MainComponent implements OnInit {
 
   imageToShow: any;
   isImageLoading: boolean;
+  isRunScreens: boolean;
 
   ngOnInit(): void {
+    this.isRunScreens = false;
+  }
+
+  runLoad(): void{
+    this.isRunScreens = true;
     this.loadScreenShot();
   }
 
-  loadScreenShot(): void{
-    this.isImageLoading = true;
-    this.portalService.getScreenShot('http://localhost:8080').subscribe(data => {
-      this.createImageFromBlob(data);
-      this.isImageLoading = false;
-    }, error => {
-      this.isImageLoading = false;
-      console.log(error);
-    });
+  async loadScreenShot(): Promise<any>{
+    while (this.isRunScreens) {
+      await this.delay(10);
+      this.isImageLoading = true;
+      this.portalService.getScreenShot('http://localhost:8080').subscribe(data => {
+        this.createImageFromBlob(data);
+        this.isImageLoading = false;
+      }, error => {
+        this.isImageLoading = false;
+        console.log(error);
+      });
+    }
   }
 
   createImageFromBlob(image: Blob): void {
@@ -37,6 +46,10 @@ export class MainComponent implements OnInit {
     if (image) {
       reader.readAsDataURL(image);
     }
+  }
+
+  private delay(ms: number): Promise<any> {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
 }
