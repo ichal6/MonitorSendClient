@@ -10,6 +10,7 @@ export class MainComponent implements OnInit {
   delay: number;
   isRunScreenShots: boolean;
   isFrozenLastImage: boolean;
+  serverAddress: string;
 
   ngOnInit(): void {
   }

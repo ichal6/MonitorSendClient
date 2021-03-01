@@ -17,6 +17,7 @@ export class ScreenShotComponent implements OnInit, OnChanges {
   subscription: Subscription;
   @Input() delay: number;
   @Input() isRun: boolean;
+  @Input() serverAddress: string;
 
   ngOnInit(): void {
   }
@@ -24,15 +25,15 @@ export class ScreenShotComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void{
     console.log(this.delay, this.isRun, this.isImageLoading);
     this.disableServer();
-    if (this.isRun && this.delay != null) {
-      this.loadScreenShot(this.delay);
+    if (this.isRun && this.delay != null && this.serverAddress != null) {
+      this.loadScreenShot(this.delay, this.serverAddress);
     }
   }
 
-  loadScreenShot(delay: number): void{
+  loadScreenShot(delay: number, serverAddress: string): void{
     this.isImageLoading = true;
     this.subscription = interval(delay).pipe(
-      mergeMap(() => this.portalService.getScreenShot('http://localhost:8080')),
+      mergeMap(() => this.portalService.getScreenShot('http://' + serverAddress + ':8080')),
     ).subscribe(data => {
       this.createImageFromBlob(data);
     }, error => {

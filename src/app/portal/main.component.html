@@ -1,7 +1,10 @@
 <app-options (delayScreenEvent)="runScreenShots($event)"
              (startScreenEvent)="isRunScreenShots=($event)"
-             (displayLastScreenEvent)="isFrozenLastImage=($event)">
+             (displayLastScreenEvent)="isFrozenLastImage=($event)"
+             (changeServerAddress)="serverAddress=($event)">
 </app-options>
-<app-screen-shot [delay]="delay" [isRun]="isRunScreenShots"
-                 [isImageLoading]="isFrozenLastImage">
+<app-screen-shot [delay]="delay"
+                 [isRun]="isRunScreenShots"
+                 [isImageLoading]="isFrozenLastImage"
+                 [serverAddress]="serverAddress">
 </app-screen-shot>

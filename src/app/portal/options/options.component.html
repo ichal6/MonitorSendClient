@@ -2,7 +2,15 @@
   <label> Please provide options:
     <input formControlName="delay" (focusout)="inputValue($event)" placeholder="insert delay">
   </label>
+
   <button type="submit" (click)="runLoad()">Load view</button>
   <button type="button" (click)="stopLoad(); frozenScreen()">Show last screen</button>
   <button type="reset" (click)="stopLoad()">Stop view</button>
+
+  <label for="servers"> Please choose server:</label>
+  <input formControlName="server" id="servers" type="text" list="serversList" (focusout)="fillServerAddress($event)"/>
+  <datalist id="serversList">
+    <option>localhost</option>
+    <option>192.168.1.16</option>
+  </datalist>
 </form>

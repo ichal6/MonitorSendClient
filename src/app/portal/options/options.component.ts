@@ -9,12 +9,15 @@ import { FormBuilder } from '@angular/forms';
 })
 export class OptionsComponent implements OnInit {
   @Output() displayLastScreenEvent = new EventEmitter<boolean>();
-  timeDelay: number;
   @Output() delayScreenEvent = new EventEmitter<number>();
   @Output() startScreenEvent = new EventEmitter<boolean>();
+  @Output() changeServerAddress = new EventEmitter<string>();
+  timeDelay: number;
+  @Output() serverAddress: string;
 
   screenShotForm = this.formBuilder.group({
-    delay: ''
+    delay: '',
+    server: ''
   });
 
   constructor(private formBuilder: FormBuilder) { }
@@ -26,7 +29,12 @@ export class OptionsComponent implements OnInit {
     this.timeDelay = event.target.value;
   }
 
+  fillServerAddress(event): void {
+    this.serverAddress = event.target.value;
+  }
+
   runLoad(): void{
+    this.changeServerAddress.emit(this.serverAddress);
     this.startScreenEvent.emit(true);
     this.delayScreenEvent.emit(this.timeDelay);
   }
