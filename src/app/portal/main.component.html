@@ -1,8 +1,9 @@
 <input (focusout)="inputValue($event)" placeholder="Podaj opóźnienie">
 <button (click)="runLoad()">Załaduj</button>
+<button (click)="disableServer(); isImageLoading=true">Show last screen</button>
 <button (click)="disableServer()">Wyłącz</button>
 
 <img class="img-fluid" [src]="imageToShow"
-     alt="Place image title"
+     alt="Wait for screen"
      *ngIf="isImageLoading">
 
