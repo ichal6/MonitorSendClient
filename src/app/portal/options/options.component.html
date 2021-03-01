@@ -1,0 +1,8 @@
+<form [formGroup]="screenShotForm" (ngSubmit)="runLoad()">
+  <label> Please provide options:
+    <input formControlName="delay" (focusout)="inputValue($event)" placeholder="insert delay">
+  </label>
+  <button type="submit" (click)="runLoad()">Load view</button>
+  <button type="button" (click)="stopLoad(); frozenScreen()">Show last screen</button>
+  <button type="reset" (click)="stopLoad()">Stop view</button>
+</form>

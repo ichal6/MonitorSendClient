@@ -1,9 +1,7 @@
-<input (focusout)="inputValue($event)" placeholder="Podaj opóźnienie">
-<button (click)="runLoad()">Załaduj</button>
-<button (click)="disableServer(); isImageLoading=true">Show last screen</button>
-<button (click)="disableServer()">Wyłącz</button>
-
-<img class="img-fluid" [src]="imageToShow"
-     alt="Wait for screen"
-     *ngIf="isImageLoading">
-
+<app-options (delayScreenEvent)="runScreenShots($event)"
+             (startScreenEvent)="isRunScreenShots=($event)"
+             (displayLastScreenEvent)="isFrozenLastImage=($event)">
+</app-options>
+<app-screen-shot [delay]="delay" [isRun]="isRunScreenShots"
+                 [isImageLoading]="isFrozenLastImage">
+</app-screen-shot>
