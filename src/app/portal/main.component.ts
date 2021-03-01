@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
     this.loadScreenShot(this.timeDelay);
   }
 
-  async loadScreenShot(delay: number): Promise<any>{
+  loadScreenShot(delay: number): void{
     this.isImageLoading = true;
     this.subscription = interval(delay).pipe(
       mergeMap(() => this.portalService.getScreenShot('http://localhost:8080')),
