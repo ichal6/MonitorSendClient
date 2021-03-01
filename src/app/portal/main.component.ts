@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {PortalService} from '../service/portal.service';
+import {interval, Subscription} from 'rxjs';
+import {mergeMap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -12,29 +14,32 @@ export class MainComponent implements OnInit {
 
   imageToShow: any;
   isImageLoading: boolean;
-  isRunScreens: boolean;
+  subscription: Subscription;
+  timeDelay = 300;
 
   ngOnInit(): void {
-    this.isRunScreens = false;
+  }
+
+  inputValue(event): void {
+   this.timeDelay = event.target.value;
+   console.log(this.timeDelay);
   }
 
   runLoad(): void{
-    this.isRunScreens = true;
-    this.loadScreenShot();
+    this.loadScreenShot(this.timeDelay);
   }
 
-  async loadScreenShot(): Promise<any>{
-    while (this.isRunScreens) {
-      await this.delay(10);
-      this.isImageLoading = true;
-      this.portalService.getScreenShot('http://localhost:8080').subscribe(data => {
-        this.createImageFromBlob(data);
-        this.isImageLoading = false;
-      }, error => {
-        this.isImageLoading = false;
-        console.log(error);
-      });
-    }
+  async loadScreenShot(delay: number): Promise<any>{
+    this.isImageLoading = true;
+    this.subscription = interval(delay).pipe(
+      mergeMap(() => this.portalService.getScreenShot('http://localhost:8080')),
+    ).subscribe(data => {
+      this.createImageFromBlob(data);
+      this.isImageLoading = false;
+    }, error => {
+      this.isImageLoading = false;
+      console.log(error);
+    });
   }
 
   createImageFromBlob(image: Blob): void {
@@ -48,8 +53,8 @@ export class MainComponent implements OnInit {
     }
   }
 
-  private delay(ms: number): Promise<any> {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  disableServer(): void{
+    this.subscription.unsubscribe();
   }
 
 }

@@ -1,8 +1,7 @@
 <p>main works!</p>
+<input (focusout)="inputValue($event)" placeholder="Podaj opóźnienie">
 <button (click)="runLoad()">Załaduj</button>
-<button (click)="isRunScreens=false">Wyłącz</button>
+<button (click)="disableServer()">Wyłącz</button>
 
-<img [src]="imageToShow"
+<img class="img-fluid" [src]="imageToShow"
      alt="Place image title">
-
-
