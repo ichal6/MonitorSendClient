@@ -35,7 +35,6 @@ export class MainComponent implements OnInit {
       mergeMap(() => this.portalService.getScreenShot('http://localhost:8080')),
     ).subscribe(data => {
       this.createImageFromBlob(data);
-      this.isImageLoading = false;
     }, error => {
       this.isImageLoading = false;
       console.log(error);
@@ -54,6 +53,7 @@ export class MainComponent implements OnInit {
   }
 
   disableServer(): void{
+    this.isImageLoading = false;
     this.subscription.unsubscribe();
   }
 
